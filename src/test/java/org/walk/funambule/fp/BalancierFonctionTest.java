@@ -1,11 +1,14 @@
 package org.walk.funambule.fp;
 
-import static org.junit.Assert.*;
-import static org.walk.funambule.fp.BalancierFonction.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.walk.funambule.fp.BalancierFonction.banane;
+import static org.walk.funambule.fp.BalancierFonction.sePoserDroite;
+import static org.walk.funambule.fp.BalancierFonction.sePoserDroiteAvecEquilibre;
+import static org.walk.funambule.fp.BalancierFonction.sePoserGauche;
+import static org.walk.funambule.fp.BalancierFonction.sePoserGaucheAvecEquilibre;
 
 import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -58,7 +61,7 @@ public class BalancierFonctionTest {
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
 				.apply(3, new BalancierEtat())
 				.flatMap(etat0 -> sePoserDroiteAvecEquilibre.apply(3, etat0))
-				.flatMap(etat1 -> sePoserDroiteAvecEquilibre.apply(-1, etat1))
+				.flatMap(etat1 -> sePoserDroiteAvecEquilibre.apply(2, etat1))
 				.flatMap(banane)
 				.flatMap(etat2 -> sePoserGaucheAvecEquilibre.apply(3, etat2));
 		
