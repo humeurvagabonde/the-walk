@@ -63,7 +63,7 @@ public class BalancierFonctionTest {
 				.flatMap(etat0 -> sePoserDroiteAvecEquilibre.apply(3, etat0))
 				.flatMap(etat1 -> sePoserDroiteAvecEquilibre.apply(2, etat1))
 				.flatMap(banane)
-				.flatMap(etat2 -> sePoserGaucheAvecEquilibre.apply(3, etat2));
+				.flatMap(etat2 -> sePoserGaucheAvecEquilibre.apply(2, etat2));
 		
 		assertFalse(etatOptFinal.isPresent());
 	}

@@ -1,15 +1,24 @@
 package org.walk.functor.compose;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import static org.walk.functor.compose.ComposeFn.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.walk.functor.compose.ComposeFn.auCarre;
+import static org.walk.functor.compose.ComposeFn.divisePar2;
+import static org.walk.functor.compose.ComposeFn.divisePar5;
+import static org.walk.functor.compose.ComposeFn.estPair;
+import static org.walk.functor.compose.ComposeFn.plus4;
+import static org.walk.functor.compose.ComposeFn.plus5;
 
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.junit.Test;
+
 public class ComposeFnTest {
 
+    // P.E un exemple de lambada non pure : i.e accedant a une variable final externe au scope
+    
 	@Test
 	public void testCompositionSimple() {
 		Function<Integer, Integer> opeComplexe = auCarre.compose(plus4);

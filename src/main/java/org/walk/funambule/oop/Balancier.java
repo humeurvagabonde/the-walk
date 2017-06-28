@@ -2,11 +2,12 @@ package org.walk.funambule.oop;
 
 public class Balancier {
 
+    private static final Integer LIMITE_PERTE_BALANCE = 3;
+    
 	private Integer nbOiseauxGauche = 0;
 	private Integer nbOiseauxDroite = 0;
 	private Boolean perteEquilibre = false; 
 	
-	private final Integer limiteEquilibre = 3;
 	
 	// TODO : gerer le décollage negatif ou le nb d'oiseaux qui decollent > au nb d'oiseau du balancier
 	
