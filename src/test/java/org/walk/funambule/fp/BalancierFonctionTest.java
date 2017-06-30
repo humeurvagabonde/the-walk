@@ -14,6 +14,9 @@ import org.junit.Test;
 
 public class BalancierFonctionTest {
 
+	/*
+	 * FONCTIONS QUI NE PEUVENT PAS "ECHOUER"
+	 */
 	@Test
 	public void testAvecFonctions() {
 		// gauche(4).droite(3).gauche(2)
@@ -27,13 +30,43 @@ public class BalancierFonctionTest {
 		assertEquals(Integer.valueOf(3), balancier.getNbOiseauxDroite());
 	}
 	
+	/*
+	 * FONCTIONS QUI PEUVENT "ECHOUER"
+	 */
+	@Test
+	public void testCompositionAvecFonctionsEtOptional() {
+		// gauche(4).droite(3).gauche(2)
+		//BalancierEtat balancier =  sePoserGaucheAvecEquilibre.apply(2, sePoserDroiteAvecEquilibre.apply(3, sePoserGaucheAvecEquilibre.apply(4, new BalancierEtat())));
+		
+		/*
+		 * En introduisant le Optional on ne peut plus composer nos fonctions.
+		 * sePoserGaucheAvecEquilibre :: Integer -> BalancierEtat -> Optional<BalancierEtat>
+		 * sePoserDroiteAvecEquilibre :: Integer -> BalancierEtat -> Optional<BalancierEtat>
+		 */
+	}
+	
+	@Test
+	public void testSuccesAvecFonctionsEtOptionalEtDoliprane() {
+		// gauche(3).droite(3).gauche(2)
+		Optional<BalancierEtat> etatOptFinal = Optional.empty();
+		Optional<BalancierEtat> etatOpt0 = sePoserGaucheAvecEquilibre.apply(3, new BalancierEtat());
+		if (etatOpt0.isPresent()) {
+			Optional<BalancierEtat> etatOpt1 = etatOpt0.flatMap(etat0 -> sePoserDroiteAvecEquilibre.apply(3, etat0));
+			if (etatOpt1.isPresent()) {
+				Optional<BalancierEtat> etatOpt2 = etatOpt1.flatMap(etat1 -> sePoserGaucheAvecEquilibre.apply(2, etat1));
+				if (etatOpt2.isPresent()) {
+					etatOptFinal = etatOpt2;
+				}
+			}
+		}
+		assertEquals(Integer.valueOf(5), etatOptFinal.get().getNbOiseauxGauche());
+		assertEquals(Integer.valueOf(3), etatOptFinal.get().getNbOiseauxDroite());
+	}
+	
 	@Test
 	public void testSuccesAvecFonctionsEtOptional() {
 		// gauche(3).droite(3).gauche(2)
-		Optional<BalancierEtat> etatOpt0 = sePoserGaucheAvecEquilibre.apply(3, new BalancierEtat());
-		Optional<BalancierEtat> etatOpt1 = etatOpt0.flatMap(etat0 -> sePoserDroiteAvecEquilibre.apply(3, etat0));
-		Optional<BalancierEtat> etatOpt2 = etatOpt1.flatMap(etat1 -> sePoserGaucheAvecEquilibre.apply(2, etat1));
-		
+		// Le map/flatMap encapsule la vérification du isPresent
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
 				.apply(3, new BalancierEtat())
 				.flatMap(etat0 -> sePoserDroiteAvecEquilibre.apply(3, etat0))
@@ -64,6 +97,16 @@ public class BalancierFonctionTest {
 				.flatMap(etat1 -> sePoserDroiteAvecEquilibre.apply(2, etat1))
 				.flatMap(banane)
 				.flatMap(etat2 -> sePoserGaucheAvecEquilibre.apply(2, etat2));
+		
+		assertFalse(etatOptFinal.isPresent());
+	}
+	
+	@Test
+	public void testEchecNombreNegatifInvalideAvecFonctionsEtOptional() {
+		// gauche(3).gauche(-10)
+		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
+				.apply(3, new BalancierEtat())
+				.flatMap(etat1 -> sePoserGaucheAvecEquilibre.apply(-10, etat1));
 		
 		assertFalse(etatOptFinal.isPresent());
 	}

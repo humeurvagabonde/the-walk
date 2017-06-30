@@ -17,8 +17,14 @@ import org.junit.Test;
 
 public class ComposeFnTest {
 
-    // P.E un exemple de lambada non pure : i.e accedant a une variable final externe au scope
-    
+	
+	@Test
+	public void testFonctionImpure() {
+		Boolean flagWabbit = true;
+		Function<String, String> fnHey = s -> "Hey " + (flagWabbit ? s.replace('r', 'w') : s);
+		assertEquals("Hey woi wabbit", fnHey.apply("roi rabbit"));
+	}
+	
 	@Test
 	public void testCompositionSimple() {
 		Function<Integer, Integer> opeComplexe = auCarre.compose(plus4);
