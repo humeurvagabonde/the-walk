@@ -18,7 +18,7 @@ public class BalancierFonctionTest {
 	 * FONCTIONS QUI NE PEUVENT PAS "ECHOUER"
 	 */
 	@Test
-	public void testAvecFonctions() {
+	public void testFonctions() {
 		// gauche(4).droite(3).gauche(2)
 		BalancierEtat balancier =  sePoserGauche.apply(2, sePoserDroite.apply(3, sePoserGauche.apply(4, new BalancierEtat())));
 		assertEquals(Integer.valueOf(6), balancier.getNbOiseauxGauche());
@@ -34,7 +34,7 @@ public class BalancierFonctionTest {
 	 * FONCTIONS QUI PEUVENT "ECHOUER"
 	 */
 	@Test
-	public void testCompositionAvecFonctionsEtOptional() {
+	public void testCompositionFonctionsEtContexte() {
 		// gauche(4).droite(3).gauche(2)
 		//BalancierEtat balancier =  sePoserGaucheAvecEquilibre.apply(2, sePoserDroiteAvecEquilibre.apply(3, sePoserGaucheAvecEquilibre.apply(4, new BalancierEtat())));
 		
@@ -46,7 +46,7 @@ public class BalancierFonctionTest {
 	}
 	
 	@Test
-	public void testSuccesAvecFonctionsEtOptionalEtDoliprane() {
+	public void testSuccesFonctionsEtContexteEtDoliprane() {
 		// gauche(3).droite(3).gauche(2)
 		Optional<BalancierEtat> etatOptFinal = Optional.empty();
 		Optional<BalancierEtat> etatOpt0 = sePoserGaucheAvecEquilibre.apply(3, new BalancierEtat());
@@ -64,7 +64,7 @@ public class BalancierFonctionTest {
 	}
 	
 	@Test
-	public void testSuccesAvecFonctionsEtOptional() {
+	public void testSuccesFonctionsEtContexte() {
 		// gauche(3).droite(3).gauche(2)
 		// Le map/flatMap encapsule la vérification du isPresent
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
@@ -77,7 +77,7 @@ public class BalancierFonctionTest {
 	}
 	
 	@Test
-	public void testEchecDesequilibreAvecFonctionsEtOptional() {
+	public void testEchecDesequilibreFonctionsEtContexte() {
 		// gauche(3).droite(3).droite(-1).gauche(3)
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
 				.apply(3, new BalancierEtat())
@@ -89,7 +89,7 @@ public class BalancierFonctionTest {
 	}
 	
 	@Test
-	public void testEchecBananeAvecFonctionsEtOptional() {
+	public void testEchecBanane() {
 		// gauche(3).droite(3).droite(2).banane().gauche(2)
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
 				.apply(3, new BalancierEtat())
@@ -102,7 +102,7 @@ public class BalancierFonctionTest {
 	}
 	
 	@Test
-	public void testEchecNombreNegatifInvalideAvecFonctionsEtOptional() {
+	public void testEchecNombreNegatifInvalide() {
 		// gauche(3).gauche(-10)
 		Optional<BalancierEtat> etatOptFinal = sePoserGaucheAvecEquilibre
 				.apply(3, new BalancierEtat())
